@@ -1,11 +1,17 @@
+
 # EID-MusicBox
 Project for the Experimental Instrument Design Course @X
 
 Designed for Teensy 4.0
 
-The project aims to create a probabilistic Music Box, with two oscillators 
+The project aims to create a probabilistic Music Box, with two oscillators gated by an envelope generator. The envelope is trigger by a bernoulli gate, which plays the note according to a certain probability. This is implemented by a random guess at each clock tick. The probability can be controlled by knobs, as well as the clock rate. The controls are separated for each oscillator, as they are meant to be played as separate instruments in a collaborative environment. One can be used as based while the other can be used to generate a random melody on top, or they can be made to duet with each other. 
 
+The notes are picked from a hard-coded scale which can be changed by manually writing down frequencies in the scale array [].
+Modulation of the oscillators is included, but not implemented yet due to limited time and lack of knobs.
 
+The Teensy Audio schematic can be found below.
+
+![chrome_VJyW3RIddv](https://user-images.githubusercontent.com/55795025/175766335-1bd99442-58da-45e0-9e57-128e46fa9bba.png)
 
 
 Pin Map:
