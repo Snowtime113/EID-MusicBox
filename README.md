@@ -14,9 +14,9 @@ The Teensy Audio schematic can be found below.
 ![chrome_VJyW3RIddv](https://user-images.githubusercontent.com/55795025/175766335-1bd99442-58da-45e0-9e57-128e46fa9bba.png)
 
 
-##Pin Map:
+## Pin Map:
 
-#Analog:
+# Analog:
 
 14 -> Master Volume  
 
@@ -39,7 +39,7 @@ The Teensy Audio schematic can be found below.
 23 -> Rate 1st Oscillator
 
 
-#Digital:
+# Digital:
 
 
 1 -> Waveform Change Osc 1
@@ -49,4 +49,6 @@ The Teensy Audio schematic can be found below.
 3 -> Toggle Pitch Shift On/Off
 
 4 -> Toggle Knob 15 usage
+
+7 -> DIN DAC
 
