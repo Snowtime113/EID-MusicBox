@@ -16,7 +16,7 @@ The Teensy Audio schematic can be found below.
 
 ## Pin Map:
 
-# Analog:
+### Analog:
 
 14 -> Master Volume  
 
@@ -39,7 +39,7 @@ The Teensy Audio schematic can be found below.
 23 -> Rate 1st Oscillator
 
 
-# Digital:
+### Digital:
 
 
 1 -> Waveform Change Osc 1
