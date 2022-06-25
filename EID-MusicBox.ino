@@ -56,17 +56,11 @@ AudioConnection          patchCord10(filter1, 0, freeverbs1, 0);
 
 float scale[] = {130.81,155.56,174.61,207.65,233.08,261.63}; //C3 Eb3 F Ab3 Bb3 C4 
 float scale1[] = {130.81,155.56,196,233.08,261.63};
-//float scale2[] = {146.83,174.61,207.65,233.08,261.63};
-float scale2[] = {233.08,233.50};
-int initialVolume = 70;
-String wf[4] = {WAVEFORM_SINE,WAVEFORM_TRIANGLE,WAVEFORM_SAWTOOTH,WAVEFORM_SQUARE};
+
 unsigned long time_now1 = 0;
 unsigned long time_now2 = 0;
-float rel = 20;
 bool noteflag1 = false;
 bool noteflag2 = false;
-int count = 0;
-float tot = 0;
 bool b = true;
 bool c = true;
 float d;
@@ -87,7 +81,7 @@ Bounce button4 = Bounce(4, 10);
 
 
 int cyclewf(int curr){
-  
+   // cycle through waveforms given the current
     int current_waveform  = 0;
     switch (curr) {
       case WAVEFORM_SINE:
@@ -117,19 +111,6 @@ float randomNote(float prevNote){
   
   int g = random(100);
   float newNote = 0;
-  /*
-  if (g<thr) {
-    do{
-     newNote = scale1[random(0,5)];
-    }while (prevNote == newNote);
-  return newNote;
-  }
-  else {
-    do{
-     newNote = scale2[random(0,2)];
-    }while (prevNote == newNote);
-  return newNote;
-  */
   do{
      newNote = scale[random(0,6)];
     }while (prevNote == newNote);
@@ -139,8 +120,8 @@ float randomNote(float prevNote){
     
   
 
-bool chance(float th)
-{
+bool chance(float th) {
+  // return a gate (true or false) for a certain probability
   float a = random(100);
   Serial.println((String)"prob: "+th);
   Serial.println((String)"guess: "+ a);
@@ -166,8 +147,6 @@ void setup() {
   wf1 = WAVEFORM_SINE;
   wf2 = WAVEFORM_SINE;
   //begin waveforms so they are triggered by the envelope
-  //waveform1.frequency(2*scale[0]);
-  //waveform2.frequency(2*scale[2]);
   waveformMod2.begin(wf2);
   waveformMod1.begin(wf1);
   waveform1.begin(WAVEFORM_SINE);
@@ -203,8 +182,7 @@ void loop() {
   button3.update();
   button4.update();
   float vol = map(readKnob(14),0.0,1023.0,0.0,0.9);
-  //bool modFlag = true;
-  // put your main code here, to run repeatedly:
+ 
   
   if (button4.fallingEdge()){
     vcfflag = !vcfflag;
@@ -236,22 +214,14 @@ void loop() {
     pitchChord = 0;
     
   }
-  Serial.println(vcfflag);
-  Serial.println(pitch);
+  
   float dur2 = map(readKnob(16),0.0,1023.0,5,6000); //
-  // add toggle pitch/chord
   float prob2 = map(readKnob(17),0.0,1023.0,-1,101);
   float rate2 = map(readKnob(18),0.0,1023.0,10,400);
   float dur1 =  map(readKnob(19),0.0,1023.0,5,6000); //
   float prob1 = map(readKnob(22) ,0.0,1023.0,-1,101); //
   float rate1 = map(readKnob(23),0.0,1023.0,10,400); //
-  //Serial.println(vol);
-  //Serial.println(fdbk);
-  //Serial.println(delayTime);  
-//  Serial.println((String)"pitch: "+pitchChord);
-  //Serial.println(dur);
-  //Serial.println(modulation);
-  //Serial.println((String)"probability: "+ prob);
+ 
   if (button1.fallingEdge()){
    
       wf1 = cyclewf(wf1);
@@ -265,33 +235,26 @@ void loop() {
       waveformMod2.begin(wf2);
   }
   
-  
-  //do the stuff
-  
-  
+   
   
   
   mixer1.gain(0,vol);
   mixer1.gain(1,vol);
-  // add button toggle
-  //amp3.gain(modulation);
-  //amp4.gain(modulation);
+  
   float period1 = 60/rate1*1000;
   float period2 = 60/rate2*1000;
-  //Serial.println((String)"period (ms): "+ period);
+ 
   
  
   
   
   if ((millis()-time_now1 > period1)) {
   b = chance(prob1);
-  //Serial.println(count/tot);
-  //Serial.println((String)b);
-  //tot = tot+1;
+ 
   time_now1 = millis();
     if (b){
       count = count+1;
-      //Serial.println((String)"NoteOn1");
+    
       d = randomNote(d);
       waveformMod1.frequency(2*d);
       
@@ -308,10 +271,10 @@ void loop() {
 
     if ((millis()-time_now2 > period2)) {
     c = chance(prob2);
-   // Serial.println((String)c);
+   
     time_now2 = millis();
     if (c){
-     // Serial.println((String)"NoteOn2");
+
       e = randomNote(e);
       
       waveformMod2.frequency(2*e+(e*pitchChord));
@@ -330,7 +293,7 @@ void loop() {
   
   if ((noteflag2) && (millis()-time_now2 > dur2 )){
     
-   //Serial.println((String)"NoteOff");
+   
    envelope2.noteOff();
    noteflag2 = false;
   }
@@ -338,15 +301,11 @@ void loop() {
   
   if ((noteflag1) && (millis()-time_now1 > dur1 )){
     
-   //Serial.println((String)"NoteOff");
    envelope1.noteOff();
    noteflag1 =  false;
 
   }
 
   delay(5);
-  // rate = readKnob()
-  // prob = readKnob()
-  
-  //Serial.println(pitchChord);
+
 }
